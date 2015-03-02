@@ -1,17 +1,70 @@
 (add-hook 'before-make-frame-hook
     #'(lambda ()
-        (add-to-list 'default-frame-alist '(left . 0))
+        (add-to-list 'default-frame-alist '(left . 200))
         (add-to-list 'default-frame-alist '(top . 0))
-        (add-to-list 'default-frame-alist '(height . 70))
+        (add-to-list 'default-frame-alist '(height . 90))
         (add-to-list 'default-frame-alist '(width . 120))
-        (add-to-list 'default-frame-alist '(font .  "Monaco-13"))))
+        (add-to-list 'default-frame-alist '(font .  "Source Code Pro-13"))))
 
 (setq mac-command-modifier 'meta
       mac-option-modifier 'none
       default-input-method "MacOSX")
 
-(setq whitespace-line-column 120)
+;; whitespace, disable highlighting lines that exceed a certain length limit
+(setq whitespace-style '(face tabs empty trailing))
 
+(disable-theme 'zenburn)
+(load-theme 'monokai t)
+
+;; # C/C++ configuration BEGIN
+;; http://tuhdo.github.io/c-ide.html
+
+(global-unset-key (kbd "C-M-SPC"))
+
+;; function-args
+(fa-config-default)
+
+;; CEDET
+
+;; (require 'cc-mode)
+;; (require 'semantic)
+
+;; (global-semanticdb-minor-mode 1)
+;; (global-semantic-idle-scheduler-mode 1)
+
+;; (semantic-mode 1)
+
+;; company mode
+(require 'company)
+(add-hook 'after-init-hook 'global-company-mode)
+
+(setq company-backends (delete 'company-semantic company-backends))
+;;(define-key c-mode-map  [(tab)] 'company-complete)
+;;(define-key c++-mode-map  [(tab)] 'company-complete)
+
+;; irony
+(add-hook 'c++-mode-hook 'irony-mode)
+(add-hook 'c-mode-hook 'irony-mode)
+(add-hook 'objc-mode-hook 'irony-mode)
+
+;; replace the `completion-at-point' and `complete-symbol' bindings in
+;; irony-mode's buffers by irony-mode's function
+(defun my-irony-mode-hook ()
+  (define-key irony-mode-map [remap completion-at-point]
+    'irony-completion-at-point-async)
+  (define-key irony-mode-map [remap complete-symbol]
+    'irony-completion-at-point-async))
+(add-hook 'irony-mode-hook 'my-irony-mode-hook)
+(add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
+
+(eval-after-load 'company
+  '(add-to-list 'company-backends 'company-irony))
+
+;; ------ C/C++ configuration END -------
+
+; start yasnippet with emacs
+(require 'yasnippet)
+(yas-global-mode 1)
 
 ;; functions
 
@@ -25,6 +78,8 @@
   (redraw-display))
 
 (global-set-key (kbd "<f7>") 'toggle-line-spacing)
+(toggle-line-spacing)
+
 
 ;; Source: http://www.emacswiki.org/emacs/CopyingWholeLines
 (defun copy-line (arg)
