@@ -10,6 +10,8 @@
       mac-option-modifier 'none
       default-input-method "MacOSX")
 
+(global-visual-line-mode t)
+
 ;; whitespace, disable highlighting lines that exceed a certain length limit
 (setq whitespace-style '(face tabs empty trailing))
 
