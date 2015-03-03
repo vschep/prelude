@@ -1,17 +1,17 @@
-;;; prelude-scss.el --- Emacs Prelude: scss support
+;;; prelude-yaml.el --- Emacs Prelude: YAML programming support.
 ;;
 ;; Copyright © 2011-2014 Bozhidar Batsov
 ;;
-;; Author: Bozhidar Batsov <bozhidar@batsov.com>
-;; URL: http://www.batsov.com/emacs-prelude
+;; Author: ToBeReplaced
+;; URL: http://batsov.com/prelude
 ;; Version: 1.0.0
-;; Keywords: convenience
+;; Keywords: convenience yaml
 
 ;; This file is not part of GNU Emacs.
 
 ;;; Commentary:
 
-;; Some basic configuration for scss-mode.
+;; Prelude configuration for YAML.
 
 ;;; License:
 
@@ -31,19 +31,14 @@
 ;; Boston, MA 02110-1301, USA.
 
 ;;; Code:
+(prelude-require-packages '(yaml-mode))
 
-(require 'prelude-css)
-(prelude-require-packages '(scss-mode))
+;; yaml-mode doesn't derive from prog-mode, but we can at least enable
+;; whitespace-mode and apply cleanup.
+(add-hook 'yaml-mode-hook 'whitespace-mode)
+(add-hook 'yaml-mode-hook 'subword-mode)
+(add-hook 'yaml-mode-hook
+          (lambda () (add-hook 'before-save-hook 'prelude-cleanup-maybe nil t)))
 
-;; turn off annoying auto-compile on save
-(setq scss-compile-at-save nil)
-
-(defun prelude-scss-mode-defaults ()
-  (prelude-css-mode-defaults))
-
-(setq prelude-scss-mode-hook 'prelude-scss-mode-defaults)
-
-(add-hook 'scss-mode-hook (lambda () (run-hooks 'prelude-scss-mode-hook)))
-
-(provide 'prelude-scss)
-;;; prelude-scss.el ends here
+(provide 'prelude-yaml)
+;;; prelude-yaml.el ends here
