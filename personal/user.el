@@ -1,10 +1,10 @@
-(add-hook 'before-make-frame-hook
-    #'(lambda ()
-        (add-to-list 'default-frame-alist '(left . 200))
-        (add-to-list 'default-frame-alist '(top . 0))
-        (add-to-list 'default-frame-alist '(height . 90))
+;; My configuration
+
+(add-hook 'after-init-hook
+    '(lambda ()
+       (add-to-list 'default-frame-alist '(height . 50))
         (add-to-list 'default-frame-alist '(width . 120))
-        (add-to-list 'default-frame-alist '(font .  "Source Code Pro-13"))))
+        (add-to-list 'default-frame-alist '(font .  "Source Code Pro-14"))))
 
 (setq mac-command-modifier 'meta
       mac-option-modifier 'none
