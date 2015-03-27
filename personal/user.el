@@ -51,8 +51,6 @@
 
 (semantic-mode 1)
 
-(semantic-add-system-include "~/Projects/DSAudiD5/ClearCaseVOB/AfsDriveSW/ImplementationSet/Include")
-
 ;; company mode
 (require 'company)
 (add-hook 'after-init-hook 'global-company-mode)
