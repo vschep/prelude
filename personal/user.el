@@ -16,10 +16,24 @@
 (setq whitespace-style '(face tabs empty trailing))
 
 (disable-theme 'zenburn)
-(load-theme 'monokai t)
+(load-theme 'leuven t)
+(set-face-attribute 'org-level-1 nil :background nil)
+(set-face-attribute 'org-level-1 nil :foreground "dim gray")
+(set-face-attribute 'org-level-2 nil :background nil)
+(set-face-attribute 'org-level-2 nil :foreground "dodger blue")
+
+
+;;(load-theme 'material t)
+
+;; show line numbers
+(global-linum-mode)
 
 ;; # C/C++ configuration BEGIN
 ;; http://tuhdo.github.io/c-ide.html
+
+;; projectile
+(projectile-global-mode)
+(setq projectile-completion-system 'helm)
 
 (global-unset-key (kbd "C-M-SPC"))
 
@@ -28,19 +42,21 @@
 
 ;; CEDET
 
-;; (require 'cc-mode)
-;; (require 'semantic)
+(require 'cc-mode)
+(require 'semantic)
 
-;; (global-semanticdb-minor-mode 1)
-;; (global-semantic-idle-scheduler-mode 1)
+(global-semanticdb-minor-mode 1)
+(global-semantic-idle-scheduler-mode 1)
+(global-semantic-stickyfunc-mode 1)
 
-;; (semantic-mode 1)
+(semantic-mode 1)
+
+(semantic-add-system-include "~/Projects/DSAudiD5/ClearCaseVOB/AfsDriveSW/ImplementationSet/Include")
 
 ;; company mode
 (require 'company)
 (add-hook 'after-init-hook 'global-company-mode)
 
-(setq company-backends (delete 'company-semantic company-backends))
 ;;(define-key c-mode-map  [(tab)] 'company-complete)
 ;;(define-key c++-mode-map  [(tab)] 'company-complete)
 
