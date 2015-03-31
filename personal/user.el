@@ -15,15 +15,31 @@
 ;; whitespace, disable highlighting lines that exceed a certain length limit
 (setq whitespace-style '(face tabs empty trailing))
 
+;; color theme
 (disable-theme 'zenburn)
 (load-theme 'leuven t)
+;;(load-theme 'material t)
 (set-face-attribute 'org-level-1 nil :background nil)
 (set-face-attribute 'org-level-1 nil :foreground "dim gray")
 (set-face-attribute 'org-level-2 nil :background nil)
 (set-face-attribute 'org-level-2 nil :foreground "dodger blue")
 
+;; transparent emacs
+;(set-frame-parameter (selected-frame) 'alpha '(<active> [<inactive>]))
+(set-frame-parameter (selected-frame) 'alpha '(95 75))
+(add-to-list 'default-frame-alist '(alpha 95 75))
 
-;;(load-theme 'material t)
+(eval-when-compile (require 'cl))
+(defun toggle-transparency ()
+  (interactive)
+  (if (/=
+       (cadr (frame-parameter nil 'alpha))
+       100)
+      (set-frame-parameter nil 'alpha '(100 100))
+    (set-frame-parameter nil 'alpha '(95 75))))
+(toggle-transparency)
+(global-set-key (kbd "C-c #") 'toggle-transparency)
+
 
 ;; show line numbers
 (global-linum-mode)
